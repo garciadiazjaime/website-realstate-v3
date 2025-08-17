@@ -1,0 +1,22 @@
+export type Place = {
+  type: string;
+  address: string;
+  city: string;
+  state: string;
+  zip: number;
+  price: number;
+  beds: number;
+  baths: number;
+  squareFeet: number | null;
+  yearBuilt: number | null;
+  daysOnMarket: number;
+  priceSquareFoot: number | null;
+  hoaMonth: number | null;
+  status: boolean;
+  nextOpenHouseStartTime: string;
+  nextOpenHouseEndTime: string;
+  url: string;
+  latitude: number;
+  longitude: number;
+  mlsId: number;
+};
