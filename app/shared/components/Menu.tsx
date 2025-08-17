@@ -7,28 +7,30 @@ export default function Menu() {
     const pathname = usePathname(); // Get the current route
 
     return (
-        <nav style={styles.nav}>
-            <Link
-                href="/"
-                style={
-                    pathname === '/'
-                        ? { ...styles.navLink, ...styles.navLinkActive }
-                        : styles.navLink
-                }
-            >
-                Places
-            </Link>
-            <Link
-                href="/about"
-                style={
-                    pathname === '/about'
-                        ? { ...styles.navLink, ...styles.navLinkActive }
-                        : styles.navLink
-                }
-            >
-                About
-            </Link>
-        </nav>
+        <>
+            <nav style={styles.nav}>
+                <Link
+                    href="/"
+                    style={
+                        pathname === '/'
+                            ? { ...styles.navLink, ...styles.navLinkActive }
+                            : styles.navLink
+                    }
+                >
+                    Places
+                </Link>
+                <Link
+                    href="/about"
+                    style={
+                        pathname === '/about'
+                            ? { ...styles.navLink, ...styles.navLinkActive }
+                            : styles.navLink
+                    }
+                >
+                    About
+                </Link>
+            </nav>
+        </>
     );
 }
 

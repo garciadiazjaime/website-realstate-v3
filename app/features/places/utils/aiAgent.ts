@@ -13,7 +13,7 @@ export const handleQuestion = async (
   question: string,
   base64Data: string // Pass the Base64 string directly
 ): Promise<string> => {
-  const text = `answer using markdown and with no more than ${MAX_WORDS} words, trying to include properties when applicable, question: ${question}`;
+  const text = `answer using markdown and with no more than ${MAX_WORDS} words, trying to include properties when applicable always adding \`Place ID\`, question: ${question}`;
   const contents = [
     {
       text,

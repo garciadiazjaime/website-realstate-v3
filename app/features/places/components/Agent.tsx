@@ -2,14 +2,14 @@
 
 import { useState } from "react";
 import { handleQuestion } from "@/app/features/places/utils/aiAgent";
-import { preprocessData } from "@/app/features/places/utils/database";
 import { usePlaces } from "@/app/features/places/context/PlacesContext";
+import { Place } from "@/app/types";
 
 export default function Agent() {
     const [question, setQuestion] = useState("");
     const [response, setResponse] = useState<string>("");
     const [loading, setLoading] = useState(false);
-    const { places, setVisibleFilteredPlaces } = usePlaces();
+    const { visibleFilteredPlaces, setVisibleFilteredPlaces } = usePlaces();
 
     const handleSubmit = async () => {
         if (!question.trim()) {
@@ -19,13 +19,14 @@ export default function Agent() {
 
         setLoading(true);
         try {
-            const base64Data = await preprocessData();
+            const base64Data = await preprocessData(visibleFilteredPlaces);
             const aiResponse = await handleQuestion(question, base64Data);
             setResponse(aiResponse);
-            const extractedPlaces = extractPlaces(aiResponse);
-            const visiblePlaces = places.filter(place => extractedPlaces.includes(place.mlsId));
-            console.log({ visiblePlaces, extractedPlaces, places })
-            setVisibleFilteredPlaces(visiblePlaces)
+
+            const placeIds = getPlaceIds(aiResponse);
+            const places = visibleFilteredPlaces.filter(place => placeIds.includes(place.mlsId));
+
+            setVisibleFilteredPlaces(places)
         } catch (error) {
             console.error("Error handling question:", error);
             setResponse("An error occurred while processing your request.");
@@ -39,6 +40,12 @@ export default function Agent() {
             <textarea
                 value={question}
                 onChange={(e) => setQuestion(e.target.value)}
+                onKeyDown={(e) => {
+                    if (e.key === "Enter" && !e.shiftKey) {
+                        e.preventDefault(); // Prevent adding a new line
+                        handleSubmit(); // Call the submit function
+                    }
+                }}
                 placeholder="Ask anything about the properties"
                 rows={4}
                 cols={50}
@@ -65,7 +72,7 @@ export default function Agent() {
                     borderRadius: "4px",
                     backgroundColor: "#fff",
                     color: "#444",
-                    lineHeight: "1.6",
+                    lineHeight: "1.8",
                 }} dangerouslySetInnerHTML={{ __html: response }}>
                 </div>
             )}
@@ -92,16 +99,28 @@ const styles: Record<string, React.CSSProperties> = {
     }
 };
 
-const extractPlaces = (aiResponse: string): number[] => {
-    // Regex to match "Place ID <number>" or "ID <number>" in various formats
-    const placeIdRegex = /(?:Place ID|ID)[:\s]*[`]?(\d+)[`]?/g;
+export const getPlaceIds = (aiResponse: string): number[] => {
+    const placeIdRegex = /(<code>Place ID<\/code>:|<strong>Place ID<\/strong>:)\s*(\d+)/g
     const matches: number[] = [];
     let match;
-
-    // Use regex to find all matches
     while ((match = placeIdRegex.exec(aiResponse)) !== null) {
-        matches.push(+match[1]); // Extract the Place ID (group 1)
+        matches.push(+match[2]); // Extract the Place ID (group 1) and convert to number
     }
 
     return matches; // Return an array of all Place IDs
+};
+
+const preprocessData = async (
+    visibleFilteredPlaces: Place[]
+): Promise<string> => {
+    const data = visibleFilteredPlaces
+        .map(
+            (place: Place) =>
+                `Place ID: ${place.mlsId}, Address: ${place.address}, Price: ${place.price}, Beds: ${place.beds}, Baths: ${place.baths}, Square Feet: ${place.squareFeet}, Zip Code: ${place.zip}`
+        )
+        .join("\n");
+    const base64Data = Buffer.from(
+        `Here is the data about properties:\n${data}`
+    ).toString("base64");
+    return base64Data;
 };

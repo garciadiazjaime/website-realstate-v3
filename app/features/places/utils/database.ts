@@ -122,24 +122,3 @@ export const setPlacesFromDatabase = async (
     console.error(error);
   }
 };
-
-const getPlacesData = async (): Promise<string> => {
-  const db = await openDatabase("PlacesDB", 1, "places");
-  const places = await fetchAllRecords(db, "places");
-
-  // Convert the data into a string format for LLaMA
-  return places
-    .map(
-      (place: Place) =>
-        `Place ID: ${place.mlsId}, Address: ${place.address}, Price: ${place.price}, Beds: ${place.beds}, Baths: ${place.baths}, Square Feet: ${place.squareFeet}`
-    )
-    .join("\n");
-};
-
-export const preprocessData = async (): Promise<string> => {
-  const data = await getPlacesData();
-  const base64Data = Buffer.from(
-    `Here is the data about properties:\n${data}`
-  ).toString("base64");
-  return base64Data;
-};

@@ -8,6 +8,7 @@ import { PlacesProvider } from "@/app/features/places/context/PlacesContext";
 import Summary from "@/app/features/places/components/Summary";
 import ZipCodes from "@/app/features/places/components/ZipCodes";
 import Agent from "@/app/features/places/components/Agent";
+import Upload from "@/app/features/places/components/Upload";
 
 export default function Home() {
 
@@ -16,6 +17,10 @@ export default function Home() {
       <>
         <div style={{ display: "flex", gap: 16 }}>
           <div style={{ maxWidth: "30%", display: "flex", flexDirection: "column", gap: 16, height: "100vh" }}>
+
+            <div style={{ overflow: "scroll", boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)", backgroundColor: "#FFFFFF", padding: 16 }}>
+              <Upload />
+            </div>
 
             <div style={{ overflow: "scroll", boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)", backgroundColor: "#FFFFFF", padding: 16 }}>
               <Filters />
