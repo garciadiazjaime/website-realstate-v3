@@ -252,12 +252,12 @@ const getCustomIcon = (place: Place, selectedPlaceId: number | null, minPlacePri
 const getAttributes = (place: Place, selectedPlaceId: number | null, minPlacePrice: number, maxPlacePrice: number) => {
     const color = interpolateColor(place.price, minPlacePrice, maxPlacePrice);
     const r = 8;
-    const times = 3;
+    const times = 2;
     if (place.mlsId === selectedPlaceId) {
         return {
-            r: r * times, // Increase radius by 1.5 times
-            size: 32 * times, // Increase scaled size by 1.5 times
-            color: "#00000066", // Black for selected place
+            r: r * times,
+            size: 32 * times,
+            color
         };
     }
 
