@@ -40,6 +40,6 @@ const rgbToHex = (r: number, g: number, b: number) => {
     .toUpperCase()}`;
 };
 
-export const loggerInfo = (message: string, metadata: Object) => {
+export const loggerInfo = (message: string, metadata: object) => {
   console.log(message, metadata);
 };

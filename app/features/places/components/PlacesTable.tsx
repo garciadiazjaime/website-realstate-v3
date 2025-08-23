@@ -58,7 +58,7 @@ export default function PlacesTable() {
 
     const placeClickHandler = (place: Place) => {
         if (selectedPlaceId === place.mlsId) {
-            setSelectedPlaceId(null);
+            setSelectedPlaceId(null!);
             return;
         }
 

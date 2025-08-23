@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, useCallback } from "react";
 import { GoogleMap, LoadScriptNext, Marker } from "@react-google-maps/api";
 
 import { Place } from "@/app/types";
@@ -34,7 +34,7 @@ const Map = () => {
     const [isMouseOverMap, setIsMouseOverMap] = useState(false); // Track if the mouse is over the map
     const [center, setCenter] = useState<{ lat: number; lng: number }>(getCenter(places));
 
-    const updateVisiblePlaces = (drawingRectangle?: google.maps.Rectangle) => {
+    const updateVisiblePlaces = useCallback((drawingRectangle?: google.maps.Rectangle) => {
         if (!mapRef.current) {
             return;
         }
@@ -47,7 +47,7 @@ const Map = () => {
             );
             setVisiblePlaces(visible);
         }
-    };
+    }, [places, setVisiblePlaces]);
 
     const handleOnLoad = (map: google.maps.Map) => {
         mapRef.current = map;
@@ -113,7 +113,7 @@ const Map = () => {
             google.maps.event.removeListener(mousemoveListener);
             window.removeEventListener("mouseup", mouseupHandler);
         };
-    }, [isDrawingEnabled, startPoint, drawingRectangle, isMouseOverMap]);
+    }, [isDrawingEnabled, startPoint, drawingRectangle, isMouseOverMap, updateVisiblePlaces]);
 
     const toggleDrawing = () => {
         if (!mapRef.current) return;
@@ -140,7 +140,7 @@ const Map = () => {
         }
 
         updateVisiblePlaces();
-    }, [places]);
+    }, [places, updateVisiblePlaces]);
 
     useEffect(() => {
         if (visiblePlaces.length) {
@@ -152,11 +152,11 @@ const Map = () => {
             setPlaceMinPrice(minPrice);
             setPlaceMaxPrice(maxPrice);
         }
-    }, [visiblePlaces])
+    }, [visiblePlaces, setMaxPrice, setMinPrice, setPlaceMaxPrice, setPlaceMinPrice])
 
     useEffect(() => {
         setPlacesFromDatabase(setPlaces);
-    }, []);
+    }, [setPlaces]);
 
     if (places.length === 0) {
         return <></>

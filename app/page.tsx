@@ -65,33 +65,3 @@ export default function Home() {
     </PlacesProvider>
   );
 }
-
-const styles: Record<string, React.CSSProperties> = {
-  container: {
-
-    height: "100vh",
-
-  },
-  rowContent: {
-    flex: 1,
-    overflow: "hidden",
-    display: "flex",
-    gap: 16,
-    maxHeight: "45vh"
-  },
-  summaryContainer: {
-    overflowY: "auto", flex: 3, backgroundColor: "#FFFFFF",
-    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-    padding: "16px",
-  },
-  placesContainer: {
-    overflowY: "auto", flex: 4, backgroundColor: "#FFFFFF",
-    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-    padding: "16px",
-  },
-  rowMap: {
-    flex: 1,
-
-    maxHeight: "40vh"
-  },
-};

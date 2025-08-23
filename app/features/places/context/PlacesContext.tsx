@@ -66,7 +66,7 @@ export const PlacesProvider = ({ children }: { children: ReactNode }) => {
         );
 
         setVisibleFilteredPlaces(filtered);
-    }, [minPrice, maxPrice]);
+    }, [minPrice, maxPrice, mapLoaded, visiblePlaces]);
 
     useEffect(() => {
         setVisibleFilteredPlaces(visiblePlaces);
