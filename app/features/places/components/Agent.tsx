@@ -9,7 +9,7 @@ export default function Agent() {
     const [question, setQuestion] = useState("");
     const [response, setResponse] = useState<string>("");
     const [loading, setLoading] = useState(false);
-    const { visibleFilteredPlaces, setVisibleFilteredPlaces } = usePlaces();
+    const { visibleFilteredPlaces, setVisibleFilteredPlaces, setVisiblePlaces } = usePlaces();
 
     const handleSubmit = async () => {
         if (!question.trim()) {
@@ -26,6 +26,7 @@ export default function Agent() {
             const placeIds = getPlaceIds(aiResponse);
             const places = visibleFilteredPlaces.filter(place => placeIds.includes(place.mlsId));
 
+            setVisiblePlaces(places);
             setVisibleFilteredPlaces(places)
         } catch (error) {
             console.error("Error handling question:", error);
@@ -100,7 +101,7 @@ const styles: Record<string, React.CSSProperties> = {
 };
 
 export const getPlaceIds = (aiResponse: string): number[] => {
-    const placeIdRegex = /(<code>Place ID<\/code>:|<strong>Place ID<\/strong>:)\s*(\d+)/g
+    const placeIdRegex = /(<code>Place ID<\/code>:|<strong>Place ID<\/strong>:|<code>Place ID:|Place ID:)\s*(\d+)/g
     const matches: number[] = [];
     let match;
     while ((match = placeIdRegex.exec(aiResponse)) !== null) {
