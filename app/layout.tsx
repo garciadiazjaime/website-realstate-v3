@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { GoogleTagManager } from '@next/third-parties/google'
+import { GoogleAnalytics } from '@next/third-parties/google'
 
 import "./globals.css";
 
@@ -35,7 +35,7 @@ export default function RootLayout({
           padding: '16px',
           backgroundColor: '#f9f9f9',
         }}>
-          <GoogleTagManager gtmId="G-8PLPTP51Z6" />
+          <GoogleAnalytics gaId="G-8PLPTP51Z6" />
           <Menu />
           {children}
         </div>
