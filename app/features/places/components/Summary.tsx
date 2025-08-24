@@ -108,22 +108,30 @@ export default function Summary() {
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td style={styles.tableCell}>{summary.totalPlaces}</td>
+                {summary.totalPlaces === 0 ? (
+                    <tr>
+                        <td colSpan={5}>
+                            &nbsp;
+                        </td>
+                    </tr>
+                ) : (
+                    < tr >
+                        <td style={styles.tableCell}>{summary.totalPlaces}</td>
 
-                    <td style={styles.tableCell}>${summary.averagePrice.toLocaleString(undefined, { maximumFractionDigits: 0 })}</td>
+                        <td style={styles.tableCell}>${summary.averagePrice.toLocaleString(undefined, { maximumFractionDigits: 0 })}</td>
 
-                    <td style={styles.tableCell}>{summary.averageSquareFeet.toLocaleString(undefined, { maximumFractionDigits: 0 })} ft²</td>
+                        <td style={styles.tableCell}>{summary.averageSquareFeet.toLocaleString(undefined, { maximumFractionDigits: 0 })} ft²</td>
 
-                    <td style={styles.tableCell}>{summary.averageDaysOnMarket.toLocaleString(undefined, { maximumFractionDigits: 0 })}</td>
+                        <td style={styles.tableCell}>{summary.averageDaysOnMarket.toLocaleString(undefined, { maximumFractionDigits: 0 })}</td>
 
-                    <td style={styles.tableCell}>${summary.averageHOA.toLocaleString(undefined, { maximumFractionDigits: 0 })}</td>
-                    {Object.entries(summary.countByType).map(([type, count]) => (
-                        <td style={styles.tableCell} key={`cell-${type}`}>{count}</td>
-                    ))}
-                </tr>
+                        <td style={styles.tableCell}>${summary.averageHOA.toLocaleString(undefined, { maximumFractionDigits: 0 })}</td>
+                        {Object.entries(summary.countByType).map(([type, count]) => (
+                            <td style={styles.tableCell} key={`cell-${type}`}>{count}</td>
+                        ))}
+                    </tr>
+                )}
             </tbody>
-        </table>
+        </table >
     );
 }
 
