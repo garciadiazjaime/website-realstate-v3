@@ -185,7 +185,7 @@ const Map = () => {
                 🖍️
             </button>
 
-            <LoadScriptNext googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!}>
+            <LoadScriptNext googleMapsApiKey={"test"}>
                 <GoogleMap
                     mapContainerStyle={{
                         width: "100%",
