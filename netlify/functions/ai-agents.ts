@@ -2,7 +2,7 @@ import { GoogleGenAI } from "@google/genai";
 import { marked } from "marked";
 import type { HandlerEvent } from "@netlify/functions";
 
-const GEMINI_API_KEY = "TEST";
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
 
 const MAX_WORDS = 240; // Maximum number of words for the response
