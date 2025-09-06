@@ -161,6 +161,7 @@ const Map = () => {
     if (places.length === 0) {
         return <></>
     }
+    console.log("NEXT_PUBLIC_GOOGLE_MAPS", process.env.NEXT_PUBLIC_GOOGLE_MAPS)
 
     return (
         <div style={{ position: "relative", width: "100%", height: "100%" }}>
